@@ -45,7 +45,7 @@ def generate_random_position(occupied_positions=None):
 
     if len(occupied_positions) == 1:  # 1 occupied position
         x, y = occupied_positions[0]
-        while (x, y) == occupied_positions:
+        while (x, y) == occupied_positions[0]:
             x = random.choice(range(1, 9))
             y = random.choice(range(1, 9))
         return x, y
