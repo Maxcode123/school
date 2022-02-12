@@ -1,7 +1,3 @@
-
-from bisect import bisect
-
-
 def main():
 
     file_path = "./two_cities_ascii.txt"
@@ -10,8 +6,10 @@ def main():
         text = text_file.read()
 
     bit_sequence = create_bit_sequence(text)
-    bits16 = [bit_sequence[i:i+16] for i in range(0, len(bit_sequence), 16)]
-    bits16.pop() # remove last item to be sure that all elements are 16 bits
+    bits16 = [
+        bit_sequence[i : i + 16] for i in range(0, len(bit_sequence), 16)
+    ]
+    bits16.pop()  # remove last item to be sure that all elements are 16 bits
 
     even = find_divisible(bits16, 2)
     divisible_by_3 = find_divisible(bits16, 3)
@@ -24,8 +22,8 @@ def main():
 
 
 def create_bit_sequence(text):
-    """Returns the text received as a sequence of bits in a string. Each 
-    character is converted to a 7 bit binary number, then the first two and 
+    """Returns the text received as a sequence of bits in a string. Each
+    character is converted to a 7 bit binary number, then the first two and
     last two bits are kept and the rest are removed."""
     bits = ""
     for char in text:
@@ -35,16 +33,18 @@ def create_bit_sequence(text):
         bits += outermost_bits
     return bits
 
+
 def find_divisible(bit_list, number):
     """Returns the percentage of numbers in the bit_list that are divisible by
-     the given number."""
+    the given number."""
     even = 0
     for bits in bit_list:
-        if int(bits,2) % number == 0:
+        if int(bits, 2) % number == 0:
             even += 1
     percentage = even / len(bit_list) * 100
-    percentage = round(percentage,2)
+    percentage = round(percentage, 2)
     return percentage
+
 
 if __name__ == "__main__":
     main()

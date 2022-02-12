@@ -14,9 +14,10 @@ def main():
     print(f"Three most common initial two characters: {two_chars[-3:]}")
     print(f"Three most common initial three characters {three_chars[-3:]}")
 
+
 def produce_valid_text():
     "Returns the text in a string containing only lowercase letters and space."
-    
+
     file_path = "./two_cities_ascii.txt"
 
     with open(file_path) as text_file:
@@ -59,8 +60,9 @@ def produce_valid_text():
             valid_text += char
     return valid_text
 
+
 def count_occurrence(text_list, chars_length=None):
-    """Returns a sorted listed of tuples with keys and occurences of keys in 
+    """Returns a sorted listed of tuples with keys and occurences of keys in
     the text_list. Keys can be whole words or a number of characters."""
     if chars_length is None:
         end = lambda word: len(word)
@@ -75,20 +77,23 @@ def count_occurrence(text_list, chars_length=None):
 
     return occurence
 
+
 def famous_last_words(words):
-    """Returns the 10 most famous words, if some words appear the same number 
+    """Returns the 10 most famous words, if some words appear the same number
     times, it drops the first of them. The words list must be sorted."""
     last_10 = words[-10:]
     for index, _ in enumerate(last_10[:-1]):
-        if last_10[index][1] == last_10[index+1][1]:
+        if last_10[index][1] == last_10[index + 1][1]:
             shift_and_remove(words, last_10, index)
     return last_10
 
+
 def shift_and_remove(words, last_10, index):
-    """Removes the item with index from last_10 and shifts all items from the 
+    """Removes the item with index from last_10 and shifts all items from the
     start up to index one place to the right."""
-    for idx, _ in enumerate(last_10[:index+1]):
-        last_10[index-idx] = words[-len(last_10[index:]) - 1 - idx]
+    for idx, _ in enumerate(last_10[: index + 1]):
+        last_10[index - idx] = words[-len(last_10[index:]) - 1 - idx]
+
 
 if __name__ == "__main__":
     main()
