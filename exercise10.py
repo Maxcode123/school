@@ -37,11 +37,11 @@ def create_bit_sequence(text):
 def find_divisible(bit_list, number):
     """Returns the percentage of numbers in the bit_list that are divisible by
     the given number."""
-    even = 0
+    divisible = 0
     for bits in bit_list:
         if int(bits, 2) % number == 0:
-            even += 1
-    percentage = even / len(bit_list) * 100
+            divisible += 1
+    percentage = divisible / len(bit_list) * 100
     percentage = round(percentage, 2)
     return percentage
 
