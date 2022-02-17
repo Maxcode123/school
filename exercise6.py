@@ -19,18 +19,46 @@ def play():
         occupied_positions=[rook_position, bishop_position]
     )
 
-    if diagonal_offense(queen_position, rook_position) or straight_offense(
+    queen_eats_diagonal_rook = diagonal_offense(
         queen_position, rook_position
-    ):
-        black += 1
-    if diagonal_offense(queen_position, bishop_position) or straight_offense(
-        queen_position, bishop_position
-    ):
+    ) and not diagonal_interference(
+        bishop_position, queen_position, rook_position
+    )
+    queen_eats_straight_rook = straight_offense(
+        queen_position, rook_position
+    ) and not straight_interference(
+        bishop_position, queen_position, rook_position
+    )
+    if queen_eats_diagonal_rook or queen_eats_straight_rook:
         black += 1
 
-    if diagonal_offense(bishop_position, queen_position):
+    queen_eats_diagonal_bishop = diagonal_offense(
+        queen_position, bishop_position
+    ) and not diagonal_interference(
+        rook_position, queen_position, bishop_position
+    )
+    queen_eats_straight_bishop = straight_offense(
+        queen_position, bishop_position
+    ) and not straight_interference(
+        rook_position, queen_position, bishop_position
+    )
+    if queen_eats_diagonal_bishop or queen_eats_straight_bishop:
+        black += 1
+
+    bishop_eats_queen = diagonal_offense(
+        bishop_position, queen_position
+    ) and not diagonal_interference(
+        rook_position, bishop_position, queen_position
+    )
+    if bishop_eats_queen:
         white += 1
-    if straight_offense(rook_position, queen_position):
+
+    rook_eats_queen = straight_offense(
+        rook_position, queen_position
+    ) and not straight_interference(
+        bishop_position, rook_position, queen_position
+    )
+    if rook_eats_queen:
         white += 1
 
     return black, white
@@ -78,6 +106,29 @@ def diagonal_offense(attacker_position, defender_position):
     diff_y = attacker_position[1] - defender_position[1]
     slope = diff_y // diff_x
     if slope == 1 or slope == -1:
+        return True
+    return False
+
+
+def straight_interference(position, attacker_position, defender_position):
+    """Checks if position interferes between an attacker that eats a defender."""
+    if not straight_offense(attacker_position, position):
+        return False
+    if attacker_position[0] < position[0] < defender_position[0]:
+        return True
+    if attacker_position[1] < position[1] < defender_position[1]:
+        return True
+    return False
+
+
+def diagonal_interference(position, attacker_position, defender_position):
+    """Checks if position interferes between an attacker that eats a defender."""
+    if not diagonal_offense(attacker_position, position):
+        return False
+    if (
+        attacker_position[0] < position[0] < defender_position[0]
+        and attacker_position[1] < position[1] < defender_position[1]
+    ):
         return True
     return False
 
