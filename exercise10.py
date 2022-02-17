@@ -29,6 +29,7 @@ def create_bit_sequence(text):
     for char in text:
         number = ord(char)
         binary = bin(number)[2:]
+        binary = (7 - len(binary)) * "0" + binary
         outermost_bits = binary[:2] + binary[-2:]
         bits += outermost_bits
     return bits
